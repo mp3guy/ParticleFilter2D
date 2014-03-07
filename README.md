@@ -9,4 +9,6 @@ Uses some code from the B-Human code release ([http://www.b-human.de/](http://ww
 
 Triangular distribution used for motion model noise.
 
-![ParticleFilter2D](http://mp3guy.github.io/img/ParticleFilter2D.png)
+<p align="center">
+  <img src="http://mp3guy.github.io/img/ParticleFilter2D.png" alt="ParticleFilter2D"/>
+</p>
