@@ -31,7 +31,7 @@ int main()
 
     cvSetMouseCallback("World", onMouse);
 
-    char key;
+    char key = 0;
 
     gettimeofday(&timer, 0);
 
@@ -45,16 +45,19 @@ int main()
 
     while(true)
     {
-        gettimeofday(&timer, 0);
+        if(key != -1)
+        {
+            gettimeofday(&timer, 0);
 
-        WorldModel::currentPose += odometry;
+            WorldModel::currentPose += odometry;
 
-        myWorldDrawer->drawWorld();
-        myWorldDrawer->drawParticles(myParticleFilter->processFrame(odometry, SensorModel::getVisibleLandmarks()),
-                                     myParticleFilter->getParticles(), myParticleFilter->maxParticle);
-        myWorldDrawer->showImage();
+            myWorldDrawer->drawWorld();
+            myWorldDrawer->drawParticles(myParticleFilter->processFrame(odometry, SensorModel::getVisibleLandmarks()),
+                                         myParticleFilter->getParticles(), myParticleFilter->maxParticle);
+            myWorldDrawer->showImage();
 
-        odometry = Pose2D();
+            odometry = Pose2D();
+        }
 
         key = cvWaitKey(33);
 
