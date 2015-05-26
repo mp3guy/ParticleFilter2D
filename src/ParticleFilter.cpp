@@ -8,6 +8,7 @@
 #include "ParticleFilter.h"
 
 ParticleFilter::ParticleFilter(int numParticles)
+ : weightSum(0)
 {
     particles.reserve(numParticles);
 
@@ -52,6 +53,13 @@ Pose2D ParticleFilter::processFrame(Pose2D & odometry, std::vector<SensorModel::
     processMotion(odometry);
 
     processSensor(visibleLandmarks);
+
+    weightSum = 0.0f;
+
+    for(unsigned int i = 0; i < particles.size(); i++)
+    {
+        weightSum += particles[i].weight;
+    }
 
     if(shouldResample())
     {
@@ -113,17 +121,6 @@ void ParticleFilter::processSensor(std::vector<SensorModel::SensorMeasurement> &
                                  * gaussianProbability(fabs(angle - visibleLandmarks[j].bearing), landmarkAngleMeasurementStdDev);
         }
     }
-
-    float maxWeight = 0.0f;
-
-    for(unsigned int i = 0; i < particles.size(); i++)
-    {
-        if(particles[i].weight > maxWeight)
-        {
-            maxWeight = particles[i].weight;
-            maxParticle = particles[i];
-        }
-    }
 }
 
 void ParticleFilter::resample()
@@ -162,13 +159,6 @@ void ParticleFilter::resample()
 bool ParticleFilter::shouldResample()
 {
     bool resample;
-
-    weightSum = 0.0f;
-
-    for(unsigned int i = 0; i < particles.size(); i++)
-    {
-        weightSum += particles[i].weight;
-    }
 
     float effectiveParticleCount = 0.0f;
 

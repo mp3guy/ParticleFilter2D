@@ -16,14 +16,14 @@ void onMouse(int event, int x, int y, int flags, void * param)
 
         myWorldDrawer->drawWorld();
         myWorldDrawer->drawParticles(myParticleFilter->processFrame(odometry, SensorModel::getVisibleLandmarks()),
-                                     myParticleFilter->getParticles(), myParticleFilter->maxParticle);
+                                     myParticleFilter->getParticles());
         myWorldDrawer->showImage();
     }
 }
 
 int main()
 {
-    myParticleFilter = new ParticleFilter(10000);
+    myParticleFilter = new ParticleFilter(50);
 
     myWorldDrawer = new WorldDrawer();
 
@@ -53,7 +53,7 @@ int main()
 
             myWorldDrawer->drawWorld();
             myWorldDrawer->drawParticles(myParticleFilter->processFrame(odometry, SensorModel::getVisibleLandmarks()),
-                                         myParticleFilter->getParticles(), myParticleFilter->maxParticle);
+                                         myParticleFilter->getParticles());
             myWorldDrawer->showImage();
 
             odometry = Pose2D();

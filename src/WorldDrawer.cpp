@@ -31,18 +31,18 @@ void WorldDrawer::showImage()
     cvShowImage("World", image);
 }
 
-void WorldDrawer::drawParticles(Particle averageParticle, std::vector<Particle> * particles, Particle & maxParticle)
+void WorldDrawer::drawParticles(Particle averageParticle, std::vector<Particle> * particles)
 {
     for(unsigned int i = 0; i < particles->size(); i++)
     {
-        drawSample(particles->at(i).position, CV_RGB(0, 0, 255));
+        int r, g, b;
+        getHeatMapColor(particles->at(i).weight, r, g, b);
+        drawSample(particles->at(i).position, CV_RGB(r, g, b));
     }
 
     drawSample(WorldModel::currentPose, CV_RGB(255, 255, 255));
 
     drawSample(averageParticle.position, CV_RGB(255, 0, 0));
-
-    drawSample(maxParticle.position, CV_RGB(0, 255, 0));
 }
 
 void WorldDrawer::drawSample(Pose2D & sample, CvScalar color)

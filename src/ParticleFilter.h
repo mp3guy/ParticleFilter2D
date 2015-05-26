@@ -30,8 +30,6 @@ class ParticleFilter
             return &particles;
         }
 
-        Particle maxParticle;
-
     private:
         Particle generateRandomSample();
         void processMotion(Pose2D & odometry);
